@@ -1,0 +1,30 @@
+{
+  "source": "teaching_sample",
+  "demo_password": "demo1234",
+  "classroom": {"id": 1, "name": "直播电商实训一班", "teacher_id": 1},
+  "users": [
+    {"id": 1, "username": "teacher", "role": "teacher", "class_id": 1},
+    {"id": 2, "username": "a_host", "role": "student", "class_id": 1},
+    {"id": 3, "username": "a_control", "role": "student", "class_id": 1},
+    {"id": 4, "username": "a_service", "role": "student", "class_id": 1},
+    {"id": 5, "username": "b_host", "role": "student", "class_id": 1},
+    {"id": 6, "username": "b_control", "role": "student", "class_id": 1},
+    {"id": 7, "username": "b_service", "role": "student", "class_id": 1}
+  ],
+  "teams": [
+    {"id": 1, "class_id": 1, "name": "青禾助农组", "members": [{"user_id": 2, "position": "host"}, {"user_id": 3, "position": "control"}, {"user_id": 4, "position": "service"}]},
+    {"id": 2, "class_id": 1, "name": "山野优选组", "members": [{"user_id": 5, "position": "host"}, {"user_id": 6, "position": "control"}, {"user_id": 7, "position": "service"}]}
+  ],
+  "products": [
+    {"id": 1, "title": "赣南脐橙 5斤装", "category": "鲜果", "cost_cents": 1500, "reference_price_cents": 2990, "selling_points": "产地直采、当季鲜果、家庭分享装", "supplier": "助农合作社", "image_or_placeholder": "🍊"},
+    {"id": 2, "title": "东北大米 2.5kg", "category": "粮油", "cost_cents": 1800, "reference_price_cents": 3500, "selling_points": "日常主食、当季新米、独立封装", "supplier": "助农合作社", "image_or_placeholder": "🌾"},
+    {"id": 3, "title": "高山红茶 100g", "category": "茶饮", "cost_cents": 2200, "reference_price_cents": 5900, "selling_points": "山地茶园、独立小袋、清晰冲泡指引", "supplier": "助农合作社", "image_or_placeholder": "🍵"},
+    {"id": 4, "title": "山花蜂蜜 500g", "category": "农产加工", "cost_cents": 2400, "reference_price_cents": 4900, "selling_points": "合作社供货、密封包装、可查看产品批次", "supplier": "助农合作社", "image_or_placeholder": "🍯"},
+    {"id": 5, "title": "香菇干货 250g", "category": "干货", "cost_cents": 1200, "reference_price_cents": 2600, "selling_points": "家庭烹饪、易储存、附泡发说明", "supplier": "助农合作社", "image_or_placeholder": "🍄"},
+    {"id": 6, "title": "紫薯 3斤装", "category": "蔬菜", "cost_cents": 900, "reference_price_cents": 1990, "selling_points": "产地发货、家庭小份装、多种烹饪方式", "supplier": "助农合作社", "image_or_placeholder": "🍠"},
+    {"id": 7, "title": "核桃仁 250g", "category": "坚果", "cost_cents": 1900, "reference_price_cents": 3900, "selling_points": "便携包装、休闲零食、配料信息清楚", "supplier": "助农合作社", "image_or_placeholder": "🌰"},
+    {"id": 8, "title": "山野农产礼盒", "category": "礼盒", "cost_cents": 6500, "reference_price_cents": 12900, "selling_points": "组合农产、礼赠包装、内容清单明确", "supplier": "助农合作社", "image_or_placeholder": "🎁"}
+  ],
+  "task_defaults": {"title": "助农直播实训与竞赛", "target_audience": "关注品质与价格的家庭消费者", "initial_budget_cents": 100000, "target_gmv_cents": 50000, "market_heat": 1, "difficulty": 1, "score_weights": {"process": 25, "business": 25, "service": 20, "compliance": 15, "review": 15}},
+  "market_sample": {"source": "sample", "notice": "以下为教学样例，并非实时市场数据", "categories": [{"name": "鲜果", "heat": 85, "price_band": "20～40元"}, {"name": "粮油", "heat": 75, "price_band": "25～50元"}, {"name": "茶饮", "heat": 65, "price_band": "40～80元"}], "audience": [{"name": "家庭采购", "share": 0.6}, {"name": "年轻尝鲜", "share": 0.25}, {"name": "礼赠需求", "share": 0.15}]}
+}

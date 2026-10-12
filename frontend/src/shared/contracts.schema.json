@@ -1,0 +1,2510 @@
+{
+  "$defs": {
+    "ActionRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "enum": [
+            "select_product",
+            "issue_coupon",
+            "announcement",
+            "speech",
+            "reply",
+            "execute_script"
+          ],
+          "title": "Type",
+          "type": "string"
+        },
+        "payload": {
+          "additionalProperties": true,
+          "title": "Payload",
+          "type": "object"
+        }
+      },
+      "required": [
+        "type",
+        "payload"
+      ],
+      "title": "ActionRequest",
+      "type": "object"
+    },
+    "AgentConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "duties": {
+          "title": "Duties",
+          "type": "string"
+        },
+        "boundaries": {
+          "title": "Boundaries",
+          "type": "string"
+        },
+        "instructions": {
+          "title": "Instructions",
+          "type": "string"
+        },
+        "knowledge_cards": {
+          "items": {
+            "$ref": "#/$defs/KnowledgeCard"
+          },
+          "title": "Knowledge Cards",
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "duties",
+        "boundaries",
+        "instructions"
+      ],
+      "title": "AgentConfig",
+      "type": "object"
+    },
+    "AgentRun": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "exclusiveMinimum": 0,
+          "title": "Id",
+          "type": "integer"
+        },
+        "owner_id": {
+          "exclusiveMinimum": 0,
+          "title": "Owner Id",
+          "type": "integer"
+        },
+        "agent_id": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Agent Id"
+        },
+        "version_id": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Version Id"
+        },
+        "config_snapshot": {
+          "$ref": "#/$defs/AgentConfig"
+        },
+        "question": {
+          "title": "Question",
+          "type": "string"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "context_snapshot": {
+          "additionalProperties": true,
+          "title": "Context Snapshot",
+          "type": "object"
+        },
+        "context_sources": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Context Sources",
+          "type": "array"
+        },
+        "output": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Output"
+        },
+        "source": {
+          "enum": [
+            "model",
+            "rule"
+          ],
+          "title": "Source",
+          "type": "string"
+        },
+        "model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model"
+        },
+        "duration_ms": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Duration Ms",
+          "type": "integer"
+        },
+        "status": {
+          "enum": [
+            "running",
+            "succeeded",
+            "failed"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "error": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Error"
+        },
+        "created_at": {
+          "format": "date-time",
+          "title": "Created At",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "owner_id",
+        "config_snapshot",
+        "question",
+        "source",
+        "status",
+        "created_at"
+      ],
+      "title": "AgentRun",
+      "type": "object"
+    },
+    "AgentRunRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "agent_id": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Agent Id"
+        },
+        "config": {
+          "$ref": "#/$defs/AgentConfig"
+        },
+        "question": {
+          "minLength": 1,
+          "title": "Question",
+          "type": "string"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        }
+      },
+      "required": [
+        "config",
+        "question"
+      ],
+      "title": "AgentRunRequest",
+      "type": "object"
+    },
+    "AssortmentItem": {
+      "additionalProperties": false,
+      "properties": {
+        "product_id": {
+          "exclusiveMinimum": 0,
+          "title": "Product Id",
+          "type": "integer"
+        },
+        "positioning": {
+          "enum": [
+            "traffic",
+            "profit",
+            "image"
+          ],
+          "title": "Positioning",
+          "type": "string"
+        },
+        "selling_points": {
+          "default": "",
+          "title": "Selling Points",
+          "type": "string"
+        },
+        "sale_price_cents": {
+          "exclusiveMinimum": 0,
+          "title": "Sale Price Cents",
+          "type": "integer"
+        },
+        "sort_order": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Sort Order",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "product_id",
+        "positioning",
+        "sale_price_cents"
+      ],
+      "title": "AssortmentItem",
+      "type": "object"
+    },
+    "AssortmentWrite": {
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "items": {
+            "$ref": "#/$defs/AssortmentItem"
+          },
+          "title": "Items",
+          "type": "array"
+        }
+      },
+      "required": [
+        "items"
+      ],
+      "title": "AssortmentWrite",
+      "type": "object"
+    },
+    "Checklist": {
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "items": {
+            "$ref": "#/$defs/ChecklistItem"
+          },
+          "title": "Items",
+          "type": "array"
+        },
+        "can_start": {
+          "title": "Can Start",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "items",
+        "can_start"
+      ],
+      "title": "Checklist",
+      "type": "object"
+    },
+    "ChecklistItem": {
+      "additionalProperties": false,
+      "properties": {
+        "key": {
+          "title": "Key",
+          "type": "string"
+        },
+        "passed": {
+          "title": "Passed",
+          "type": "boolean"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "target": {
+          "title": "Target",
+          "type": "string"
+        }
+      },
+      "required": [
+        "key",
+        "passed",
+        "message",
+        "target"
+      ],
+      "title": "ChecklistItem",
+      "type": "object"
+    },
+    "ComparisonTeam": {
+      "additionalProperties": false,
+      "properties": {
+        "team_id": {
+          "exclusiveMinimum": 0,
+          "title": "Team Id",
+          "type": "integer"
+        },
+        "team_name": {
+          "title": "Team Name",
+          "type": "string"
+        },
+        "session_id": {
+          "exclusiveMinimum": 0,
+          "title": "Session Id",
+          "type": "integer"
+        },
+        "status": {
+          "title": "Status",
+          "type": "string"
+        },
+        "preparation": {
+          "$ref": "#/$defs/Preparation"
+        },
+        "products": {
+          "items": {
+            "$ref": "#/$defs/SessionProduct"
+          },
+          "title": "Products",
+          "type": "array"
+        },
+        "metrics": {
+          "$ref": "#/$defs/Metrics"
+        },
+        "breakdown": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ScoreBreakdown"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "grade": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Grade"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "evidence_links": {
+          "items": {
+            "$ref": "#/$defs/EvidenceLink"
+          },
+          "title": "Evidence Links",
+          "type": "array"
+        }
+      },
+      "required": [
+        "team_id",
+        "team_name",
+        "session_id",
+        "status",
+        "preparation",
+        "metrics"
+      ],
+      "title": "ComparisonTeam",
+      "type": "object"
+    },
+    "Competition": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "exclusiveMinimum": 0,
+          "title": "Id",
+          "type": "integer"
+        },
+        "task_id": {
+          "exclusiveMinimum": 0,
+          "title": "Task Id",
+          "type": "integer"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "published",
+            "finished"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "rule_snapshot": {
+          "additionalProperties": true,
+          "title": "Rule Snapshot",
+          "type": "object"
+        },
+        "published_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Published At"
+        }
+      },
+      "required": [
+        "id",
+        "task_id",
+        "title",
+        "status"
+      ],
+      "title": "Competition",
+      "type": "object"
+    },
+    "CompetitionComparison": {
+      "additionalProperties": false,
+      "properties": {
+        "competition": {
+          "$ref": "#/$defs/Competition"
+        },
+        "teams": {
+          "items": {
+            "$ref": "#/$defs/ComparisonTeam"
+          },
+          "title": "Teams",
+          "type": "array"
+        }
+      },
+      "required": [
+        "competition"
+      ],
+      "title": "CompetitionComparison",
+      "type": "object"
+    },
+    "CompetitionCreate": {
+      "additionalProperties": false,
+      "properties": {
+        "task_id": {
+          "exclusiveMinimum": 0,
+          "title": "Task Id",
+          "type": "integer"
+        },
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "task_id",
+        "title"
+      ],
+      "title": "CompetitionCreate",
+      "type": "object"
+    },
+    "ControlRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "enum": [
+            "start",
+            "pause",
+            "resume",
+            "end"
+          ],
+          "title": "Action",
+          "type": "string"
+        }
+      },
+      "required": [
+        "action"
+      ],
+      "title": "ControlRequest",
+      "type": "object"
+    },
+    "Coupon": {
+      "additionalProperties": false,
+      "properties": {
+        "discount_cents": {
+          "default": 100,
+          "minimum": 0,
+          "title": "Discount Cents",
+          "type": "integer"
+        }
+      },
+      "title": "Coupon",
+      "type": "object"
+    },
+    "EvidenceLink": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "title": "Kind",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "session_id": {
+          "exclusiveMinimum": 0,
+          "title": "Session Id",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "kind",
+        "label",
+        "session_id"
+      ],
+      "title": "EvidenceLink",
+      "type": "object"
+    },
+    "Grade": {
+      "additionalProperties": false,
+      "properties": {
+        "subjective_score": {
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Subjective Score",
+          "type": "number"
+        },
+        "comment": {
+          "title": "Comment",
+          "type": "string"
+        },
+        "id": {
+          "exclusiveMinimum": 0,
+          "title": "Id",
+          "type": "integer"
+        },
+        "session_id": {
+          "exclusiveMinimum": 0,
+          "title": "Session Id",
+          "type": "integer"
+        },
+        "teacher_id": {
+          "exclusiveMinimum": 0,
+          "title": "Teacher Id",
+          "type": "integer"
+        },
+        "objective_score": {
+          "title": "Objective Score",
+          "type": "number"
+        },
+        "total_score": {
+          "title": "Total Score",
+          "type": "number"
+        },
+        "rules_version": {
+          "title": "Rules Version",
+          "type": "string"
+        },
+        "graded_at": {
+          "format": "date-time",
+          "title": "Graded At",
+          "type": "string"
+        }
+      },
+      "required": [
+        "subjective_score",
+        "comment",
+        "id",
+        "session_id",
+        "teacher_id",
+        "objective_score",
+        "total_score",
+        "rules_version",
+        "graded_at"
+      ],
+      "title": "Grade",
+      "type": "object"
+    },
+    "GradeWrite": {
+      "additionalProperties": false,
+      "properties": {
+        "subjective_score": {
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Subjective Score",
+          "type": "number"
+        },
+        "comment": {
+          "title": "Comment",
+          "type": "string"
+        }
+      },
+      "required": [
+        "subjective_score",
+        "comment"
+      ],
+      "title": "GradeWrite",
+      "type": "object"
+    },
+    "Health": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "const": "ok",
+          "title": "Status",
+          "type": "string"
+        },
+        "database": {
+          "const": "ok",
+          "title": "Database",
+          "type": "string"
+        },
+        "contract_version": {
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "modules": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Modules",
+          "type": "object"
+        },
+        "model_configured": {
+          "title": "Model Configured",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "status",
+        "database",
+        "contract_version",
+        "modules",
+        "model_configured"
+      ],
+      "title": "Health",
+      "type": "object"
+    },
+    "KnowledgeCard": {
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "content": {
+          "title": "Content",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "content"
+      ],
+      "title": "KnowledgeCard",
+      "type": "object"
+    },
+    "Leaderboard": {
+      "additionalProperties": false,
+      "properties": {
+        "stage": {
+          "enum": [
+            "provisional",
+            "final"
+          ],
+          "title": "Stage",
+          "type": "string"
+        },
+        "rules_version": {
+          "title": "Rules Version",
+          "type": "string"
+        },
+        "score_weights": {
+          "$ref": "#/$defs/ScoreWeights"
+        },
+        "deadline": {
+          "format": "date-time",
+          "title": "Deadline",
+          "type": "string"
+        },
+        "entries": {
+          "items": {
+            "$ref": "#/$defs/LeaderboardEntry"
+          },
+          "title": "Entries",
+          "type": "array"
+        },
+        "pending_entries": {
+          "items": {
+            "$ref": "#/$defs/LeaderboardEntry"
+          },
+          "title": "Pending Entries",
+          "type": "array"
+        }
+      },
+      "required": [
+        "stage",
+        "rules_version",
+        "score_weights",
+        "deadline"
+      ],
+      "title": "Leaderboard",
+      "type": "object"
+    },
+    "LeaderboardEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "team_id": {
+          "exclusiveMinimum": 0,
+          "title": "Team Id",
+          "type": "integer"
+        },
+        "team_name": {
+          "title": "Team Name",
+          "type": "string"
+        },
+        "session_id": {
+          "exclusiveMinimum": 0,
+          "title": "Session Id",
+          "type": "integer"
+        },
+        "status": {
+          "title": "Status",
+          "type": "string"
+        },
+        "metrics": {
+          "$ref": "#/$defs/Metrics"
+        },
+        "objective_score": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Objective Score"
+        },
+        "subjective_score": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Subjective Score"
+        },
+        "total_score": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Total Score"
+        }
+      },
+      "required": [
+        "team_id",
+        "team_name",
+        "session_id",
+        "status",
+        "metrics"
+      ],
+      "title": "LeaderboardEntry",
+      "type": "object"
+    },
+    "LiveState": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "enum": [
+            "preparing",
+            "live",
+            "paused",
+            "ended",
+            "submitted",
+            "graded"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "current_product": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SessionProduct"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "metrics": {
+          "$ref": "#/$defs/Metrics"
+        },
+        "latest_event_id": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Latest Event Id",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "status",
+        "metrics"
+      ],
+      "title": "LiveState",
+      "type": "object"
+    },
+    "LoginRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "username": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Username",
+          "type": "string"
+        },
+        "password": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Password",
+          "type": "string"
+        }
+      },
+      "required": [
+        "username",
+        "password"
+      ],
+      "title": "LoginRequest",
+      "type": "object"
+    },
+    "LoginResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "token": {
+          "title": "Token",
+          "type": "string"
+        },
+        "user": {
+          "$ref": "#/$defs/User"
+        }
+      },
+      "required": [
+        "token",
+        "user"
+      ],
+      "title": "LoginResponse",
+      "type": "object"
+    },
+    "Metrics": {
+      "additionalProperties": false,
+      "properties": {
+        "gmv_cents": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Gmv Cents",
+          "type": "integer"
+        },
+        "refund_cents": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Refund Cents",
+          "type": "integer"
+        },
+        "net_sales_cents": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Net Sales Cents",
+          "type": "integer"
+        },
+        "profit_cents": {
+          "default": 0,
+          "title": "Profit Cents",
+          "type": "integer"
+        },
+        "cash_balance_cents": {
+          "default": 0,
+          "title": "Cash Balance Cents",
+          "type": "integer"
+        },
+        "promotion_spend_cents": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Promotion Spend Cents",
+          "type": "integer"
+        },
+        "order_count": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Order Count",
+          "type": "integer"
+        },
+        "refunded_order_count": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Refunded Order Count",
+          "type": "integer"
+        },
+        "online_count": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Online Count",
+          "type": "integer"
+        },
+        "cumulative_entries": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Cumulative Entries",
+          "type": "integer"
+        },
+        "product_clicks": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Product Clicks",
+          "type": "integer"
+        },
+        "audience_question_count": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Audience Question Count",
+          "type": "integer"
+        },
+        "replied_question_count": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Replied Question Count",
+          "type": "integer"
+        },
+        "violation_count": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Violation Count",
+          "type": "integer"
+        },
+        "signed_order_count": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Signed Order Count",
+          "type": "integer"
+        },
+        "conversion_rate": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Conversion Rate"
+        },
+        "reply_rate": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reply Rate"
+        }
+      },
+      "title": "Metrics",
+      "type": "object"
+    },
+    "Order": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "exclusiveMinimum": 0,
+          "title": "Id",
+          "type": "integer"
+        },
+        "session_id": {
+          "exclusiveMinimum": 0,
+          "title": "Session Id",
+          "type": "integer"
+        },
+        "session_product_id": {
+          "exclusiveMinimum": 0,
+          "title": "Session Product Id",
+          "type": "integer"
+        },
+        "buyer_label": {
+          "title": "Buyer Label",
+          "type": "string"
+        },
+        "qty": {
+          "exclusiveMinimum": 0,
+          "title": "Qty",
+          "type": "integer"
+        },
+        "unit_cost_cents": {
+          "minimum": 0,
+          "title": "Unit Cost Cents",
+          "type": "integer"
+        },
+        "unit_sale_cents": {
+          "minimum": 0,
+          "title": "Unit Sale Cents",
+          "type": "integer"
+        },
+        "discount_cents": {
+          "minimum": 0,
+          "title": "Discount Cents",
+          "type": "integer"
+        },
+        "amount_cents": {
+          "minimum": 0,
+          "title": "Amount Cents",
+          "type": "integer"
+        },
+        "status": {
+          "enum": [
+            "pending_shipment",
+            "shipped",
+            "signed",
+            "refunded"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "created_at": {
+          "format": "date-time",
+          "title": "Created At",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "session_id",
+        "session_product_id",
+        "buyer_label",
+        "qty",
+        "unit_cost_cents",
+        "unit_sale_cents",
+        "discount_cents",
+        "amount_cents",
+        "status",
+        "created_at"
+      ],
+      "title": "Order",
+      "type": "object"
+    },
+    "Plan": {
+      "additionalProperties": false,
+      "properties": {
+        "theme": {
+          "default": "",
+          "title": "Theme",
+          "type": "string"
+        },
+        "target_audience": {
+          "default": "",
+          "title": "Target Audience",
+          "type": "string"
+        }
+      },
+      "title": "Plan",
+      "type": "object"
+    },
+    "Preparation": {
+      "additionalProperties": false,
+      "properties": {
+        "research": {
+          "$ref": "#/$defs/Research"
+        },
+        "plan": {
+          "$ref": "#/$defs/Plan"
+        },
+        "script": {
+          "items": {
+            "$ref": "#/$defs/ScriptSegment"
+          },
+          "title": "Script",
+          "type": "array"
+        },
+        "promotion": {
+          "$ref": "#/$defs/Promotion"
+        },
+        "room": {
+          "$ref": "#/$defs/Room"
+        },
+        "coupon": {
+          "$ref": "#/$defs/Coupon"
+        }
+      },
+      "title": "Preparation",
+      "type": "object"
+    },
+    "PreparationWrite": {
+      "additionalProperties": false,
+      "properties": {
+        "research": {
+          "$ref": "#/$defs/Research"
+        },
+        "plan": {
+          "$ref": "#/$defs/Plan"
+        },
+        "script": {
+          "items": {
+            "$ref": "#/$defs/ScriptSegment"
+          },
+          "title": "Script",
+          "type": "array"
+        },
+        "promotion": {
+          "$ref": "#/$defs/Promotion"
+        },
+        "room": {
+          "$ref": "#/$defs/Room"
+        },
+        "coupon": {
+          "$ref": "#/$defs/Coupon"
+        },
+        "expected_version": {
+          "minimum": 0,
+          "title": "Expected Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "expected_version"
+      ],
+      "title": "PreparationWrite",
+      "type": "object"
+    },
+    "Product": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "exclusiveMinimum": 0,
+          "title": "Id",
+          "type": "integer"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "category": {
+          "title": "Category",
+          "type": "string"
+        },
+        "cost_cents": {
+          "minimum": 0,
+          "title": "Cost Cents",
+          "type": "integer"
+        },
+        "reference_price_cents": {
+          "minimum": 0,
+          "title": "Reference Price Cents",
+          "type": "integer"
+        },
+        "selling_points": {
+          "title": "Selling Points",
+          "type": "string"
+        },
+        "supplier": {
+          "title": "Supplier",
+          "type": "string"
+        },
+        "image_or_placeholder": {
+          "default": "",
+          "title": "Image Or Placeholder",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "category",
+        "cost_cents",
+        "reference_price_cents",
+        "selling_points",
+        "supplier"
+      ],
+      "title": "Product",
+      "type": "object"
+    },
+    "Promotion": {
+      "additionalProperties": false,
+      "properties": {
+        "channel": {
+          "const": "simulated_feed",
+          "default": "simulated_feed",
+          "title": "Channel",
+          "type": "string"
+        },
+        "budget_cents": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Budget Cents",
+          "type": "integer"
+        },
+        "audience": {
+          "default": "",
+          "title": "Audience",
+          "type": "string"
+        }
+      },
+      "title": "Promotion",
+      "type": "object"
+    },
+    "PurchaseItem": {
+      "additionalProperties": false,
+      "properties": {
+        "session_product_id": {
+          "exclusiveMinimum": 0,
+          "title": "Session Product Id",
+          "type": "integer"
+        },
+        "qty": {
+          "exclusiveMinimum": 0,
+          "title": "Qty",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "session_product_id",
+        "qty"
+      ],
+      "title": "PurchaseItem",
+      "type": "object"
+    },
+    "PurchaseRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "items": {
+            "$ref": "#/$defs/PurchaseItem"
+          },
+          "minItems": 1,
+          "title": "Items",
+          "type": "array"
+        }
+      },
+      "required": [
+        "items"
+      ],
+      "title": "PurchaseRequest",
+      "type": "object"
+    },
+    "Refund": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "exclusiveMinimum": 0,
+          "title": "Id",
+          "type": "integer"
+        },
+        "order_id": {
+          "exclusiveMinimum": 0,
+          "title": "Order Id",
+          "type": "integer"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "approved",
+            "rejected"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "handler_id": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Handler Id"
+        },
+        "handling_note": {
+          "default": "",
+          "title": "Handling Note",
+          "type": "string"
+        },
+        "amount_cents": {
+          "minimum": 0,
+          "title": "Amount Cents",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "order_id",
+        "reason",
+        "status",
+        "amount_cents"
+      ],
+      "title": "Refund",
+      "type": "object"
+    },
+    "Research": {
+      "additionalProperties": false,
+      "properties": {
+        "audience": {
+          "default": "",
+          "title": "Audience",
+          "type": "string"
+        },
+        "competitor_notes": {
+          "default": "",
+          "title": "Competitor Notes",
+          "type": "string"
+        },
+        "price_notes": {
+          "default": "",
+          "title": "Price Notes",
+          "type": "string"
+        },
+        "selection_reason": {
+          "default": "",
+          "title": "Selection Reason",
+          "type": "string"
+        }
+      },
+      "title": "Research",
+      "type": "object"
+    },
+    "Review": {
+      "additionalProperties": false,
+      "properties": {
+        "analysis": {
+          "title": "Analysis",
+          "type": "string"
+        },
+        "improvements": {
+          "title": "Improvements",
+          "type": "string"
+        },
+        "id": {
+          "exclusiveMinimum": 0,
+          "title": "Id",
+          "type": "integer"
+        },
+        "session_id": {
+          "exclusiveMinimum": 0,
+          "title": "Session Id",
+          "type": "integer"
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "submitted",
+            "graded"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "source": {
+          "const": "rule",
+          "default": "rule",
+          "title": "Source",
+          "type": "string"
+        },
+        "metrics_snapshot": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Metrics"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "objective_breakdown": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ScoreBreakdown"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "rule_snapshot": {
+          "additionalProperties": true,
+          "title": "Rule Snapshot",
+          "type": "object"
+        },
+        "submitted_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Submitted At"
+        }
+      },
+      "required": [
+        "analysis",
+        "improvements",
+        "id",
+        "session_id",
+        "status"
+      ],
+      "title": "Review",
+      "type": "object"
+    },
+    "ReviewDetail": {
+      "additionalProperties": false,
+      "properties": {
+        "review": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Review"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "metrics": {
+          "$ref": "#/$defs/Metrics"
+        },
+        "breakdown": {
+          "$ref": "#/$defs/ScoreBreakdown"
+        },
+        "grade": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Grade"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "review",
+        "metrics",
+        "breakdown",
+        "grade"
+      ],
+      "title": "ReviewDetail",
+      "type": "object"
+    },
+    "ReviewWrite": {
+      "additionalProperties": false,
+      "properties": {
+        "analysis": {
+          "title": "Analysis",
+          "type": "string"
+        },
+        "improvements": {
+          "title": "Improvements",
+          "type": "string"
+        }
+      },
+      "required": [
+        "analysis",
+        "improvements"
+      ],
+      "title": "ReviewWrite",
+      "type": "object"
+    },
+    "Room": {
+      "additionalProperties": false,
+      "properties": {
+        "theme": {
+          "default": "agriculture",
+          "title": "Theme",
+          "type": "string"
+        },
+        "title": {
+          "default": "",
+          "title": "Title",
+          "type": "string"
+        },
+        "announcement": {
+          "default": "",
+          "title": "Announcement",
+          "type": "string"
+        }
+      },
+      "title": "Room",
+      "type": "object"
+    },
+    "ScoreBreakdown": {
+      "additionalProperties": false,
+      "properties": {
+        "process": {
+          "title": "Process",
+          "type": "number"
+        },
+        "business": {
+          "title": "Business",
+          "type": "number"
+        },
+        "service": {
+          "title": "Service",
+          "type": "number"
+        },
+        "compliance": {
+          "title": "Compliance",
+          "type": "number"
+        },
+        "review": {
+          "title": "Review",
+          "type": "number"
+        },
+        "objective_score": {
+          "title": "Objective Score",
+          "type": "number"
+        },
+        "evidence": {
+          "additionalProperties": true,
+          "title": "Evidence",
+          "type": "object"
+        }
+      },
+      "required": [
+        "process",
+        "business",
+        "service",
+        "compliance",
+        "review",
+        "objective_score"
+      ],
+      "title": "ScoreBreakdown",
+      "type": "object"
+    },
+    "ScoreWeights": {
+      "additionalProperties": false,
+      "properties": {
+        "process": {
+          "default": 25,
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Process",
+          "type": "number"
+        },
+        "business": {
+          "default": 25,
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Business",
+          "type": "number"
+        },
+        "service": {
+          "default": 20,
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Service",
+          "type": "number"
+        },
+        "compliance": {
+          "default": 15,
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Compliance",
+          "type": "number"
+        },
+        "review": {
+          "default": 15,
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Review",
+          "type": "number"
+        }
+      },
+      "title": "ScoreWeights",
+      "type": "object"
+    },
+    "ScriptSegment": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "opening",
+            "product",
+            "interaction",
+            "closing"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "product_id": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Product Id"
+        },
+        "text": {
+          "default": "",
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "kind"
+      ],
+      "title": "ScriptSegment",
+      "type": "object"
+    },
+    "SessionContext": {
+      "additionalProperties": false,
+      "properties": {
+        "session_id": {
+          "exclusiveMinimum": 0,
+          "title": "Session Id",
+          "type": "integer"
+        },
+        "class_id": {
+          "exclusiveMinimum": 0,
+          "title": "Class Id",
+          "type": "integer"
+        },
+        "team_id": {
+          "exclusiveMinimum": 0,
+          "title": "Team Id",
+          "type": "integer"
+        },
+        "products": {
+          "items": {
+            "$ref": "#/$defs/SessionProduct"
+          },
+          "title": "Products",
+          "type": "array"
+        },
+        "recent_questions": {
+          "items": {
+            "$ref": "#/$defs/TrainingEvent"
+          },
+          "title": "Recent Questions",
+          "type": "array"
+        },
+        "sources": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Sources",
+          "type": "array"
+        }
+      },
+      "required": [
+        "session_id",
+        "class_id",
+        "team_id",
+        "products"
+      ],
+      "title": "SessionContext",
+      "type": "object"
+    },
+    "SessionDetail": {
+      "additionalProperties": false,
+      "properties": {
+        "session": {
+          "$ref": "#/$defs/TrainingSession"
+        },
+        "preparation": {
+          "$ref": "#/$defs/Preparation"
+        },
+        "products": {
+          "items": {
+            "$ref": "#/$defs/SessionProduct"
+          },
+          "title": "Products",
+          "type": "array"
+        },
+        "metrics": {
+          "$ref": "#/$defs/Metrics"
+        },
+        "capabilities": {
+          "additionalProperties": {
+            "type": "boolean"
+          },
+          "title": "Capabilities",
+          "type": "object"
+        }
+      },
+      "required": [
+        "session",
+        "preparation",
+        "products",
+        "metrics",
+        "capabilities"
+      ],
+      "title": "SessionDetail",
+      "type": "object"
+    },
+    "SessionProduct": {
+      "additionalProperties": false,
+      "properties": {
+        "product_id": {
+          "exclusiveMinimum": 0,
+          "title": "Product Id",
+          "type": "integer"
+        },
+        "positioning": {
+          "enum": [
+            "traffic",
+            "profit",
+            "image"
+          ],
+          "title": "Positioning",
+          "type": "string"
+        },
+        "selling_points": {
+          "default": "",
+          "title": "Selling Points",
+          "type": "string"
+        },
+        "sale_price_cents": {
+          "exclusiveMinimum": 0,
+          "title": "Sale Price Cents",
+          "type": "integer"
+        },
+        "sort_order": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Sort Order",
+          "type": "integer"
+        },
+        "id": {
+          "exclusiveMinimum": 0,
+          "title": "Id",
+          "type": "integer"
+        },
+        "session_id": {
+          "exclusiveMinimum": 0,
+          "title": "Session Id",
+          "type": "integer"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "cost_cents": {
+          "minimum": 0,
+          "title": "Cost Cents",
+          "type": "integer"
+        },
+        "purchased_qty": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Purchased Qty",
+          "type": "integer"
+        },
+        "stock_qty": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Stock Qty",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "product_id",
+        "positioning",
+        "sale_price_cents",
+        "id",
+        "session_id",
+        "title",
+        "cost_cents"
+      ],
+      "title": "SessionProduct",
+      "type": "object"
+    },
+    "Task": {
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "title": "Description",
+          "type": "string"
+        },
+        "target_audience": {
+          "default": "",
+          "title": "Target Audience",
+          "type": "string"
+        },
+        "initial_budget_cents": {
+          "default": 100000,
+          "minimum": 0,
+          "title": "Initial Budget Cents",
+          "type": "integer"
+        },
+        "target_gmv_cents": {
+          "default": 50000,
+          "exclusiveMinimum": 0,
+          "title": "Target Gmv Cents",
+          "type": "integer"
+        },
+        "market_heat": {
+          "default": 1,
+          "maximum": 3,
+          "minimum": 0.1,
+          "title": "Market Heat",
+          "type": "number"
+        },
+        "difficulty": {
+          "default": 1,
+          "maximum": 3,
+          "minimum": 0.1,
+          "title": "Difficulty",
+          "type": "number"
+        },
+        "starts_at": {
+          "format": "date-time",
+          "title": "Starts At",
+          "type": "string"
+        },
+        "ends_at": {
+          "format": "date-time",
+          "title": "Ends At",
+          "type": "string"
+        },
+        "score_weights": {
+          "$ref": "#/$defs/ScoreWeights"
+        },
+        "team_ids": {
+          "items": {
+            "exclusiveMinimum": 0,
+            "type": "integer"
+          },
+          "title": "Team Ids",
+          "type": "array"
+        },
+        "id": {
+          "exclusiveMinimum": 0,
+          "title": "Id",
+          "type": "integer"
+        },
+        "class_id": {
+          "exclusiveMinimum": 0,
+          "title": "Class Id",
+          "type": "integer"
+        },
+        "teacher_id": {
+          "exclusiveMinimum": 0,
+          "title": "Teacher Id",
+          "type": "integer"
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "published",
+            "closed"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "rules_version": {
+          "default": "mvp-v1",
+          "title": "Rules Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "starts_at",
+        "ends_at",
+        "id",
+        "class_id",
+        "teacher_id",
+        "status"
+      ],
+      "title": "Task",
+      "type": "object"
+    },
+    "TaskComparison": {
+      "additionalProperties": false,
+      "properties": {
+        "task": {
+          "$ref": "#/$defs/Task"
+        },
+        "teams": {
+          "items": {
+            "$ref": "#/$defs/ComparisonTeam"
+          },
+          "title": "Teams",
+          "type": "array"
+        }
+      },
+      "required": [
+        "task"
+      ],
+      "title": "TaskComparison",
+      "type": "object"
+    },
+    "TaskWrite": {
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "title": "Description",
+          "type": "string"
+        },
+        "target_audience": {
+          "default": "",
+          "title": "Target Audience",
+          "type": "string"
+        },
+        "initial_budget_cents": {
+          "default": 100000,
+          "minimum": 0,
+          "title": "Initial Budget Cents",
+          "type": "integer"
+        },
+        "target_gmv_cents": {
+          "default": 50000,
+          "exclusiveMinimum": 0,
+          "title": "Target Gmv Cents",
+          "type": "integer"
+        },
+        "market_heat": {
+          "default": 1,
+          "maximum": 3,
+          "minimum": 0.1,
+          "title": "Market Heat",
+          "type": "number"
+        },
+        "difficulty": {
+          "default": 1,
+          "maximum": 3,
+          "minimum": 0.1,
+          "title": "Difficulty",
+          "type": "number"
+        },
+        "starts_at": {
+          "format": "date-time",
+          "title": "Starts At",
+          "type": "string"
+        },
+        "ends_at": {
+          "format": "date-time",
+          "title": "Ends At",
+          "type": "string"
+        },
+        "score_weights": {
+          "$ref": "#/$defs/ScoreWeights"
+        },
+        "team_ids": {
+          "items": {
+            "exclusiveMinimum": 0,
+            "type": "integer"
+          },
+          "title": "Team Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "title",
+        "starts_at",
+        "ends_at"
+      ],
+      "title": "TaskWrite",
+      "type": "object"
+    },
+    "Team": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "exclusiveMinimum": 0,
+          "title": "Id",
+          "type": "integer"
+        },
+        "class_id": {
+          "exclusiveMinimum": 0,
+          "title": "Class Id",
+          "type": "integer"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "members": {
+          "items": {
+            "$ref": "#/$defs/TeamMember"
+          },
+          "title": "Members",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "class_id",
+        "name"
+      ],
+      "title": "Team",
+      "type": "object"
+    },
+    "TeamMember": {
+      "additionalProperties": false,
+      "properties": {
+        "user_id": {
+          "exclusiveMinimum": 0,
+          "title": "User Id",
+          "type": "integer"
+        },
+        "position": {
+          "enum": [
+            "host",
+            "control",
+            "service",
+            "operations"
+          ],
+          "title": "Position",
+          "type": "string"
+        }
+      },
+      "required": [
+        "user_id",
+        "position"
+      ],
+      "title": "TeamMember",
+      "type": "object"
+    },
+    "TrainingEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "exclusiveMinimum": 0,
+          "title": "Id",
+          "type": "integer"
+        },
+        "session_id": {
+          "exclusiveMinimum": 0,
+          "title": "Session Id",
+          "type": "integer"
+        },
+        "type": {
+          "title": "Type",
+          "type": "string"
+        },
+        "actor_id": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Actor Id"
+        },
+        "source": {
+          "enum": [
+            "manual",
+            "rule"
+          ],
+          "title": "Source",
+          "type": "string"
+        },
+        "payload": {
+          "additionalProperties": true,
+          "title": "Payload",
+          "type": "object"
+        },
+        "created_at": {
+          "format": "date-time",
+          "title": "Created At",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "session_id",
+        "type",
+        "source",
+        "payload",
+        "created_at"
+      ],
+      "title": "TrainingEvent",
+      "type": "object"
+    },
+    "TrainingSession": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "exclusiveMinimum": 0,
+          "title": "Id",
+          "type": "integer"
+        },
+        "task_id": {
+          "exclusiveMinimum": 0,
+          "title": "Task Id",
+          "type": "integer"
+        },
+        "team_id": {
+          "exclusiveMinimum": 0,
+          "title": "Team Id",
+          "type": "integer"
+        },
+        "status": {
+          "enum": [
+            "preparing",
+            "live",
+            "paused",
+            "ended",
+            "submitted",
+            "graded"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "rule_snapshot": {
+          "additionalProperties": true,
+          "title": "Rule Snapshot",
+          "type": "object"
+        },
+        "preparation_version": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Preparation Version",
+          "type": "integer"
+        },
+        "initial_budget_cents": {
+          "minimum": 0,
+          "title": "Initial Budget Cents",
+          "type": "integer"
+        },
+        "started_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Started At"
+        },
+        "ended_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ended At"
+        },
+        "live_elapsed_seconds": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Live Elapsed Seconds",
+          "type": "integer"
+        },
+        "current_product_id": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Current Product Id"
+        }
+      },
+      "required": [
+        "id",
+        "task_id",
+        "team_id",
+        "status",
+        "initial_budget_cents"
+      ],
+      "title": "TrainingSession",
+      "type": "object"
+    },
+    "User": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "exclusiveMinimum": 0,
+          "title": "Id",
+          "type": "integer"
+        },
+        "username": {
+          "title": "Username",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "teacher",
+            "student"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "class_id": {
+          "exclusiveMinimum": 0,
+          "title": "Class Id",
+          "type": "integer"
+        },
+        "active": {
+          "default": true,
+          "title": "Active",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "username",
+        "role",
+        "class_id"
+      ],
+      "title": "User",
+      "type": "object"
+    }
+  },
+  "anyOf": [
+    {
+      "$ref": "#/$defs/ActionRequest"
+    },
+    {
+      "$ref": "#/$defs/AgentConfig"
+    },
+    {
+      "$ref": "#/$defs/AgentRun"
+    },
+    {
+      "$ref": "#/$defs/AgentRunRequest"
+    },
+    {
+      "$ref": "#/$defs/AssortmentItem"
+    },
+    {
+      "$ref": "#/$defs/AssortmentWrite"
+    },
+    {
+      "$ref": "#/$defs/Checklist"
+    },
+    {
+      "$ref": "#/$defs/ChecklistItem"
+    },
+    {
+      "$ref": "#/$defs/ComparisonTeam"
+    },
+    {
+      "$ref": "#/$defs/Competition"
+    },
+    {
+      "$ref": "#/$defs/CompetitionComparison"
+    },
+    {
+      "$ref": "#/$defs/CompetitionCreate"
+    },
+    {
+      "$ref": "#/$defs/ControlRequest"
+    },
+    {
+      "$ref": "#/$defs/Coupon"
+    },
+    {
+      "$ref": "#/$defs/EvidenceLink"
+    },
+    {
+      "$ref": "#/$defs/Grade"
+    },
+    {
+      "$ref": "#/$defs/GradeWrite"
+    },
+    {
+      "$ref": "#/$defs/Health"
+    },
+    {
+      "$ref": "#/$defs/KnowledgeCard"
+    },
+    {
+      "$ref": "#/$defs/Leaderboard"
+    },
+    {
+      "$ref": "#/$defs/LeaderboardEntry"
+    },
+    {
+      "$ref": "#/$defs/LiveState"
+    },
+    {
+      "$ref": "#/$defs/LoginRequest"
+    },
+    {
+      "$ref": "#/$defs/LoginResponse"
+    },
+    {
+      "$ref": "#/$defs/Metrics"
+    },
+    {
+      "$ref": "#/$defs/Order"
+    },
+    {
+      "$ref": "#/$defs/Plan"
+    },
+    {
+      "$ref": "#/$defs/Preparation"
+    },
+    {
+      "$ref": "#/$defs/PreparationWrite"
+    },
+    {
+      "$ref": "#/$defs/Product"
+    },
+    {
+      "$ref": "#/$defs/Promotion"
+    },
+    {
+      "$ref": "#/$defs/PurchaseItem"
+    },
+    {
+      "$ref": "#/$defs/PurchaseRequest"
+    },
+    {
+      "$ref": "#/$defs/Refund"
+    },
+    {
+      "$ref": "#/$defs/Research"
+    },
+    {
+      "$ref": "#/$defs/Review"
+    },
+    {
+      "$ref": "#/$defs/ReviewDetail"
+    },
+    {
+      "$ref": "#/$defs/ReviewWrite"
+    },
+    {
+      "$ref": "#/$defs/Room"
+    },
+    {
+      "$ref": "#/$defs/ScoreBreakdown"
+    },
+    {
+      "$ref": "#/$defs/ScoreWeights"
+    },
+    {
+      "$ref": "#/$defs/ScriptSegment"
+    },
+    {
+      "$ref": "#/$defs/SessionContext"
+    },
+    {
+      "$ref": "#/$defs/SessionDetail"
+    },
+    {
+      "$ref": "#/$defs/SessionProduct"
+    },
+    {
+      "$ref": "#/$defs/Task"
+    },
+    {
+      "$ref": "#/$defs/TaskComparison"
+    },
+    {
+      "$ref": "#/$defs/TaskWrite"
+    },
+    {
+      "$ref": "#/$defs/Team"
+    },
+    {
+      "$ref": "#/$defs/TeamMember"
+    },
+    {
+      "$ref": "#/$defs/TrainingEvent"
+    },
+    {
+      "$ref": "#/$defs/TrainingSession"
+    },
+    {
+      "$ref": "#/$defs/User"
+    }
+  ],
+  "title": "PlatformContracts"
+}
